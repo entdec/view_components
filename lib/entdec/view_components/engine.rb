@@ -5,13 +5,13 @@ module EntDec
     class Engine < ::Rails::Engine
       engine_name "entdec_view_components"
 
-      # app/components/entdec and app/helpers/entdec are EntDec::…, not Entdec::…
+      # app/components/entdec is EntDec::…, not Entdec::…
       initializer "entdec_view_components.inflections", before: :set_autoload_paths do
         Rails.autoloaders.each { |autoloader| autoloader.inflector.inflect("entdec" => "EntDec") }
       end
 
       initializer "entdec_view_components.helpers" do
-        ActiveSupport.on_load(:action_view) { include EntDec::ViewComponentsHelper }
+        ActiveSupport.on_load(:action_view) { include EntDec::ViewComponents::Helpers }
       end
 
       initializer "entdec_view_components.assets" do |app|
