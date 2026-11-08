@@ -1,0 +1,8 @@
+/.bundle/
+/pkg/
+/tmp/
+/log/
+Gemfile.lock
+test/dummy/log/
+test/dummy/tmp/
+mise.local.toml

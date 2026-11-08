@@ -1,0 +1,15 @@
+.entdec-conditions data-controller="entdec--conditions" data-entdec--conditions-kinds-value=KINDS.to_json
+  .entdec-conditions__match
+    span = t("entdec.conditions.if")
+    = render EntDec::PillSelect::Component.new(name: name(nil), label: t("entdec.conditions.match"), options: match_options, selected: match, tone: :operator)
+    span = t("entdec.conditions.of_the_following")
+  .entdec-conditions__rules data-entdec--conditions-target="rules"
+    - rules.each_with_index do |rule, index|
+      = render EntDec::Conditions::RuleComponent.new(conditions: self, rule: rule, index: index)
+  template data-entdec--conditions-target="template"
+    = render EntDec::Conditions::RuleComponent.new(conditions: self, rule: blank_rule, index: "NEW_RULE")
+  button.entdec-conditions__add type="button" data-action="entdec--conditions#add" aria-label=t("entdec.conditions.add")
+    span.entdec-conditions__plus aria-hidden="true"
+      svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        path d="M8 3.5v9M3.5 8h9"
+    span = t("entdec.conditions.add")

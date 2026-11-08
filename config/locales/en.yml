@@ -1,0 +1,38 @@
+en:
+  entdec:
+    pill_select:
+      search: Search
+      cancel: Cancel
+    conditions:
+      if: If
+      of_the_following: of the following conditions are met
+      match: Conditions
+      matches:
+        all: all
+        any: any
+      operator: Operator
+      operators:
+        is: is
+        isnt: isn't
+        matches: contains
+        does_not_match: doesn't contain
+        gt: is more than
+        gteq: is at least
+        lt: is less than
+        lteq: is at most
+        between: is between
+        is_empty: is empty
+        isnt_empty: isn't empty
+      value: Value
+      value_to: Up to
+      and: and
+      "true": "true"
+      "false": "false"
+      add: Add a condition
+      remove: Remove this condition
+    liquid_field:
+      browse: Insert a variable
+    variable_picker:
+      label: Variable
+      choose: Choose a variable
+      root: Variables

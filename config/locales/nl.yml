@@ -1,0 +1,38 @@
+nl:
+  entdec:
+    pill_select:
+      search: Zoeken
+      cancel: Annuleren
+    conditions:
+      if: Als aan
+      of_the_following: van de volgende voorwaarden is voldaan
+      match: Voorwaarden
+      matches:
+        all: alle
+        any: één
+      operator: Operator
+      operators:
+        is: is
+        isnt: is niet
+        matches: bevat
+        does_not_match: bevat niet
+        gt: is meer dan
+        gteq: is minstens
+        lt: is minder dan
+        lteq: is hoogstens
+        between: ligt tussen
+        is_empty: is leeg
+        isnt_empty: is niet leeg
+      value: Waarde
+      value_to: Tot en met
+      and: en
+      "true": waar
+      "false": onwaar
+      add: Voorwaarde toevoegen
+      remove: Deze voorwaarde verwijderen
+    liquid_field:
+      browse: Variabele invoegen
+    variable_picker:
+      label: Variabele
+      choose: Kies een variabele
+      root: Variabelen

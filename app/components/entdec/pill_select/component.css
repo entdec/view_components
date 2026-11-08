@@ -1,0 +1,79 @@
+/* The pill select (component.rb), and fields beside it (entdec-pill-input),
+   in the style of Mensa's filter pills and popover */
+.entdec-pill-select {
+  @apply relative inline-flex;
+}
+
+.entdec-pill-select__native {
+  @apply sr-only;
+}
+
+.entdec-pill-select__pill {
+  @apply inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-medium cursor-pointer transition-colors;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.entdec-pill-select--value .entdec-pill-select__pill {
+  @apply bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:hover:bg-blue-900/60;
+}
+
+.entdec-pill-select--operator .entdec-pill-select__pill {
+  @apply bg-violet-100 text-violet-700 hover:bg-violet-200 dark:bg-violet-900/40 dark:text-violet-300 dark:hover:bg-violet-900/60;
+}
+
+.entdec-pill-select--neutral .entdec-pill-select__pill {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
+}
+
+.entdec-pill-select__chevron {
+  @apply size-4 opacity-60;
+}
+
+.entdec-pill-select__popover {
+  @apply absolute left-0 top-full z-50 mt-1 w-72 max-h-96 overflow-y-auto rounded-lg bg-white p-4 text-sm shadow-lg ring-1 ring-black/5 dark:bg-gray-800;
+}
+
+.entdec-pill-select__heading {
+  @apply mb-2 font-semibold text-gray-900 dark:text-gray-100;
+}
+
+.entdec-pill-select__search {
+  @apply mb-2 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100;
+}
+
+.entdec-pill-select__options {
+  @apply focus:outline-none;
+}
+
+.entdec-pill-select__option {
+  @apply flex cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-gray-700 dark:text-gray-300;
+}
+
+.entdec-pill-select__option--highlighted {
+  @apply bg-gray-100 dark:bg-gray-700;
+}
+
+.entdec-pill-select__check {
+  @apply inline-flex w-4 flex-none items-center justify-center text-xs;
+}
+
+.entdec-pill-select__separator {
+  @apply -mx-4 my-3 border-t border-gray-200 dark:border-gray-600;
+}
+
+.entdec-pill-select__cancel {
+  @apply cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200;
+}
+
+.entdec-pill-input {
+  @apply w-16 rounded-md border-0 bg-blue-100 px-2 py-1 text-sm font-medium text-blue-700 shadow-none focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-blue-900/40 dark:text-blue-300;
+}
+
+.entdec-pill-input--wide {
+  @apply w-56;
+}
+
+.entdec-pill-input--medium {
+  @apply w-32;
+}

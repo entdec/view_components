@@ -1,0 +1,12 @@
+.entdec-pill-select.entdec-pill-select--neutral.entdec-variable-picker data-controller="entdec--variable-picker" data-entdec--variable-picker-url-value=url data-action="keydown->entdec--variable-picker#keydown"
+  = hidden_field_tag name, value, id: nil, data: {"entdec--variable-picker-target" => "input"}
+  button.entdec-pill-select__pill type="button" aria-haspopup="listbox" aria-expanded="false" aria-label=t("entdec.variable_picker.label") data-entdec--variable-picker-target="pill" data-action="entdec--variable-picker#toggle"
+    span data-entdec--variable-picker-target="text" = label
+    svg.entdec-pill-select__chevron viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+      path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"
+  .entdec-pill-select__popover hidden=true data-entdec--variable-picker-target="popover"
+    .entdec-variable-picker__trail data-entdec--variable-picker-target="trail" data-root=t("entdec.variable_picker.root")
+    input.entdec-pill-select__search type="text" autocomplete="off" aria-label=t("entdec.pill_select.search") placeholder=t("entdec.pill_select.search") data-entdec--variable-picker-target="search" data-action="input->entdec--variable-picker#filter"
+    ul.entdec-pill-select__options role="listbox" aria-label=t("entdec.variable_picker.label") tabindex="-1" data-entdec--variable-picker-target="list"
+    .entdec-pill-select__separator
+    button.entdec-pill-select__cancel type="button" data-action="entdec--variable-picker#cancel" = t("entdec.pill_select.cancel")

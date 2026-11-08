@@ -1,0 +1,12 @@
+.entdec-pill-select class="entdec-pill-select--#{tone}" data-controller="entdec--pill-select" data-action="keydown->entdec--pill-select#keydown"
+  = native_select
+  button.entdec-pill-select__pill type="button" aria-haspopup="listbox" aria-expanded="false" aria-label=label data-entdec--pill-select-target="pill" data-action="entdec--pill-select#toggle"
+    span data-entdec--pill-select-target="text"
+    svg.entdec-pill-select__chevron viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+      path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"
+  .entdec-pill-select__popover hidden=true data-entdec--pill-select-target="popover"
+    .entdec-pill-select__heading = label
+    input.entdec-pill-select__search type="text" autocomplete="off" aria-label=t("entdec.pill_select.search") placeholder=t("entdec.pill_select.search") data-entdec--pill-select-target="search" data-action="input->entdec--pill-select#filter"
+    ul.entdec-pill-select__options role="listbox" aria-label=label tabindex="-1" data-entdec--pill-select-target="list"
+    .entdec-pill-select__separator
+    button.entdec-pill-select__cancel type="button" data-action="entdec--pill-select#cancel" = t("entdec.pill_select.cancel")

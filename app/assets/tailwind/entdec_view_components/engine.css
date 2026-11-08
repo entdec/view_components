@@ -1,0 +1,6 @@
+/* Entry point for tailwindcss-rails v4 (Tailwind CSS v4).
+   The host app includes it with: @import "../builds/tailwind/entdec_view_components";
+   In the components layer, so utility classes override the components' styles */
+@import "../../stylesheets/entdec/view_components.css" layer(components);
+
+@source "../../..";

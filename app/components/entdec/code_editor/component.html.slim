@@ -1,0 +1,8 @@
+.form-group class="form-group-#{method}"
+  = form.label method, label, class: "form-label"
+  .entdec-code-editor data-controller="entdec--code-editor" data-entdec--code-editor-lang-value=lang data-entdec--code-editor-height-value=height data-entdec--code-editor-read-only-value=readonly?.to_s
+    = form.hidden_field method, id: nil, data: {"entdec--code-editor-target" => "input"}
+  - if hint
+    small.form-text.text-muted = hint
+  - if errors.any?
+    .invalid-feedback = errors.uniq.join(", ")

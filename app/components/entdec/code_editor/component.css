@@ -1,0 +1,12 @@
+/* The code editor (component.rb), in a field's frame */
+.entdec-code-editor {
+  @apply overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm focus-within:border-primary-500 focus-within:ring-1 focus-within:ring-primary-500 dark:border-gray-600 dark:bg-gray-800;
+}
+
+.entdec-code-editor .cm-editor {
+  @apply text-sm dark:bg-gray-900 dark:text-white;
+}
+
+.entdec-code-editor .cm-gutters {
+  @apply border-gray-200 bg-gray-50 text-gray-400 dark:border-gray-700 dark:bg-gray-800;
+}

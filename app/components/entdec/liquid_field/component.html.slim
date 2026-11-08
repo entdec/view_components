@@ -1,0 +1,7 @@
+- if url
+  .entdec-liquid-field data-controller="entdec--liquid-field" data-entdec--liquid-field-url-value=url
+    button.entdec-liquid-field__browse type="button" title=t("entdec.liquid_field.browse") aria-label=t("entdec.liquid_field.browse") data-action="entdec--liquid-field#browse"
+      | { }
+    = content
+- else
+  = content

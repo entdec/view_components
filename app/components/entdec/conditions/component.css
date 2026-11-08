@@ -1,0 +1,44 @@
+/* The conditions (component.rb): a sentence, then a row of pills per rule */
+.entdec-conditions {
+  @apply flex flex-col gap-2 text-sm text-gray-700 dark:text-gray-300;
+}
+
+.entdec-conditions__match,
+.entdec-conditions__rule {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.entdec-conditions__rules {
+  @apply flex flex-col gap-2 border-l-2 border-gray-200 pl-3 dark:border-gray-600;
+}
+
+.entdec-conditions__rules:empty {
+  @apply hidden;
+}
+
+.entdec-conditions__value {
+  @apply inline-flex items-center gap-2;
+}
+
+.entdec-conditions__value[hidden] {
+  @apply hidden;
+}
+
+.entdec-conditions__remove,
+.entdec-conditions__add {
+  @apply inline-flex cursor-pointer items-center gap-1 rounded-full text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-100;
+}
+
+.entdec-conditions__remove,
+.entdec-conditions__plus {
+  @apply inline-flex size-6 flex-none items-center justify-center rounded-full border border-gray-300 dark:border-gray-600;
+}
+
+.entdec-conditions__remove svg,
+.entdec-conditions__plus svg {
+  @apply size-3.5;
+}
+
+.entdec-conditions__add {
+  @apply self-start;
+}

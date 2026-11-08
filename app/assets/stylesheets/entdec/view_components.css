@@ -1,0 +1,6 @@
+/* The components' styles (see app/assets/tailwind/entdec_view_components/engine.css) */
+@import "../../../components/entdec/pill_select/component.css";
+@import "../../../components/entdec/variable_picker/component.css";
+@import "../../../components/entdec/conditions/component.css";
+@import "../../../components/entdec/liquid_field/component.css";
+@import "../../../components/entdec/code_editor/component.css";
