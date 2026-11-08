@@ -13,6 +13,11 @@ class TestApp < Rails::Application
   config.logger = Logger.new(nil)
   config.secret_key_base = "test"
   config.i18n.available_locales = %i[en nl]
+
+  # As hosts may do, in config/initializers
+  initializer "test.inflector", before: :setup_main_autoloader do
+    Rails.autoloaders.each { |autoloader| autoloader.inflector = Zeitwerk::Inflector.new }
+  end
 end
 Rails.application.initialize!
 

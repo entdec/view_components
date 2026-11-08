@@ -109,3 +109,12 @@ class HelperTest < ComponentTest
     assert view.respond_to?(:entdec_conditions)
   end
 end
+
+class AutoloadTest < ActiveSupport::TestCase
+  test "eager loads as EntDec, whatever the host's inflector" do
+    Rails.autoloaders.main.eager_load
+
+    assert_equal "EntDec::Conditions::RuleComponent", EntDec::Conditions::RuleComponent.name
+    refute defined?(::Entdec)
+  end
+end

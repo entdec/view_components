@@ -5,9 +5,10 @@ module EntDec
     class Engine < ::Rails::Engine
       engine_name "entdec_view_components"
 
-      # app/components/entdec is EntDec::…, not Entdec::…
-      initializer "entdec_view_components.inflections", before: :set_autoload_paths do
-        Rails.autoloaders.each { |autoloader| autoloader.inflector.inflect("entdec" => "EntDec") }
+      # app/components/entdec is EntDec::…, not Entdec::…: a root of its own,
+      # so it doesn't depend on the host's inflector (which a host may replace)
+      initializer "entdec_view_components.autoload", before: :set_autoload_paths do
+        Rails.autoloaders.main.push_dir(root.join("app/components/entdec"), namespace: EntDec)
       end
 
       initializer "entdec_view_components.helpers" do
