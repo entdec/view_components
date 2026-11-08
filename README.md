@@ -44,6 +44,26 @@ And include the styles in the host's Tailwind CSS (tailwindcss-rails v4), in
 Without them those two controllers aren't registered (with a warning in the
 console) and the fields stay plain.
 
+### With esbuild
+
+With jsbundling-rails instead of importmap-rails, your build has to resolve
+the gem's imports: `entdec/view_components` is the gem's
+`app/javascript/entdec/view_components.js` and `entdec/components/x` its
+`app/components/entdec/x.js`. A bundle includes the code editor's and the
+Liquid field's controllers, so CodeMirror's packages (from npm) and TessEdit's
+JavaScript have to resolve too. For example, in an esbuild plugin:
+
+```js
+const root = execSync("bundle show entdec-view_components").toString().trim()
+
+build.onResolve({ filter: /^entdec\// }, ({ path }) => {
+  const subpath = path.replace(/^entdec\//, "")
+  return { path: subpath.startsWith("components/")
+    ? `${root}/app/components/entdec/${subpath.replace(/^components\//, "")}.js`
+    : `${root}/app/javascript/entdec/${subpath}.js` }
+})
+```
+
 ## Variables
 
 The variable picker, the conditions and the Liquid field read variables from
