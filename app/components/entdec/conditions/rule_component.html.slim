@@ -9,6 +9,9 @@
     = text_field_tag name(:value), rule.value, id: nil, class: "entdec-pill-input entdec-pill-input--medium", aria: {label: t("entdec.conditions.value")}
   span.entdec-conditions__value data-role="boolean"
     = render EntDec::PillSelect::Component.new(name: name(:value), label: t("entdec.conditions.value"), options: boolean_options, selected: (rule.value.presence || "true"))
+  - if records_url
+    span.entdec-conditions__value data-role="record"
+      = render EntDec::PillSelect::Component.new(name: name(:value), label: t("entdec.conditions.value"), options: record_options, selected: rule.value, select_html: {"data-entdec--conditions-target" => "records"})
   span.entdec-conditions__value data-role="between"
     span = t("entdec.conditions.and")
     = text_field_tag name(:value_to), rule.value_to, id: nil, class: "entdec-pill-input entdec-pill-input--medium", aria: {label: t("entdec.conditions.value_to")}

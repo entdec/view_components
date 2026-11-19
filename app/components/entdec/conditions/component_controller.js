@@ -3,10 +3,11 @@ import { Controller } from "@hotwired/stimulus"
 // The conditions (component.rb): rows added from the template and removed,
 // each with the operators for its variable's kind, and the values its
 // operator takes: none when empty, true or false for a boolean, two for
-// between. Values not shown are disabled, so they aren't sent.
+// between, a record for an object that is or isn't one (with recordsUrl).
+// Values not shown are disabled, so they aren't sent.
 export default class extends Controller {
   static targets = ["rules", "rule", "template"]
-  static values = { kinds: Object }
+  static values = { kinds: Object, recordsUrl: String }
 
   ruleTargetConnected(rule) {
     this.update({ target: rule })
@@ -27,6 +28,23 @@ export default class extends Controller {
     const rule = event.target.closest("[data-entdec--conditions-target='rule']")
     rule.dataset.kind = collection ? "string" : !type && name.endsWith("?") ? "boolean" : this.kindsValue[type] || ""
     this.update({ target: rule })
+    if (rule.dataset.kind === "object") this.loadRecords(rule)
+  }
+
+  // The chosen object's records, for its value
+  async loadRecords(rule) {
+    const select = rule.querySelector("[data-entdec--conditions-target='records']")
+    if (!this.recordsUrlValue || !select) return
+
+    const path = rule.querySelector("input[name$='[variable]']").value
+    const url = new URL(this.recordsUrlValue, window.location.href)
+    url.searchParams.set("path", path)
+    const response = await fetch(url, { headers: { Accept: "application/json" } })
+    if (!response.ok) return
+
+    const { records } = await response.json()
+    select.replaceChildren(...records.map(({ label, value }) => new Option(label, value)))
+    select.dispatchEvent(new Event("change", { bubbles: true }))
   }
 
   update({ target }) {
@@ -43,9 +61,11 @@ export default class extends Controller {
     }
 
     const operator = select.value
+    const choice = ["is", "isnt"].includes(operator)
     const shown = {
-      text: !["is_empty", "isnt_empty"].includes(operator) && !(kind === "boolean" && ["is", "isnt"].includes(operator)),
-      boolean: kind === "boolean" && ["is", "isnt"].includes(operator),
+      text: !["is_empty", "isnt_empty"].includes(operator) && !(["boolean", "object"].includes(kind) && choice),
+      boolean: kind === "boolean" && choice,
+      record: kind === "object" && choice,
       between: operator === "between"
     }
     rule.querySelectorAll(".entdec-conditions__value").forEach((value) => {

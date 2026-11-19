@@ -119,6 +119,18 @@ too), string or object. describe gives a variable's label and type (string,
 integer, date, boolean, object, …, or nil when unknown). Without a
 variables_url, variables are typed. Checking the conditions is up to the app.
 
+With `records_url`, an object (a drop, a record) also is or isn't one of its
+records, chosen from a select. `records` gives them for the rules' variables,
+`[[label, id]]`; for a variable chosen in the browser they come from
+`records_url`, which answers `GET records_url?path=location` with
+`{records: [{label, value}]}`:
+
+```slim
+= entdec_conditions name: "refinement[conditions]", rules: rules,
+    variables_url: variables_url, describe: describe,
+    records_url: records_url, records: ->(path) { Location.all.map { |location| [location.name, location.id] } }
+```
+
 ### Code editor
 
 ```slim

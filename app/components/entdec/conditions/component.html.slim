@@ -1,4 +1,4 @@
-.entdec-conditions data-controller="entdec--conditions" data-entdec--conditions-kinds-value=KINDS.to_json
+.entdec-conditions data-controller="entdec--conditions" data-entdec--conditions-kinds-value=KINDS.to_json data-entdec--conditions-records-url-value=records_url
   .entdec-conditions__match
     span = t("entdec.conditions.if")
     = render EntDec::PillSelect::Component.new(name: name(nil), label: t("entdec.conditions.match"), options: match_options, selected: match, tone: :operator)

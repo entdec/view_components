@@ -17,6 +17,15 @@ module EntDec
     # (value_to for between). describe gives a chosen variable's label and its
     # type (string, integer, date, boolean, object, …; nil when unknown).
     # Checking them is up to the app.
+    #
+    # With records_url an object (a drop, a record) also is or isn't one of
+    # its records, chosen from a select: records gives them for the rules'
+    # variables ([[label, id]]), records_url for one chosen in the browser
+    # (GET records_url&path=order.customer answers {records: [{label, value}]}).
+    #
+    #   = render EntDec::Conditions::Component.new(name: "refinement[conditions]", rules: rules,
+    #       variables_url: url, describe: describe, records_url: records_url,
+    #       records: ->(path) { Location.all.map { |location| [location.name, location.id] } })
     class Component < ViewComponent::Base
       MATCHES = %w[all any].freeze
       OPERATORS = %w[is isnt matches does_not_match gt gteq lt lteq between is_empty isnt_empty].freeze
@@ -32,14 +41,19 @@ module EntDec
 
       Rule = Data.define(:variable, :operator, :value, :value_to)
 
-      attr_reader :variables_url, :match
+      # With records_url: an object is or isn't one of its records
+      RECORD_OPERATORS = %w[is isnt].freeze
 
-      def initialize(name:, match: "all", rules: [], variables_url: nil, describe: nil)
+      attr_reader :variables_url, :records_url, :match
+
+      def initialize(name:, match: "all", rules: [], variables_url: nil, describe: nil, records_url: nil, records: nil)
         @name = name
         @match = MATCHES.include?(match.to_s) ? match.to_s : "all"
         @rules = rules
         @variables_url = variables_url
         @describe = describe
+        @records_url = records_url
+        @records = records
         super()
       end
 
@@ -61,8 +75,22 @@ module EntDec
       # Every operator, with the kinds of variable it's for
       def operator_options
         OPERATORS.map do |operator|
-          [t("entdec.conditions.operators.#{operator}"), operator, {"data-kinds" => OPERATORS_BY_KIND.select { |_, operators| operators.include?(operator) }.keys.join(" ")}]
+          [t("entdec.conditions.operators.#{operator}"), operator, {"data-kinds" => operators_by_kind.select { |_, operators| operators.include?(operator) }.keys.join(" ")}]
         end
+      end
+
+      def operators_by_kind
+        return OPERATORS_BY_KIND unless records_url
+
+        OPERATORS_BY_KIND.merge("object" => RECORD_OPERATORS + OPERATORS_BY_KIND["object"])
+      end
+
+      # An object variable's records, [[label, id]], with the rule's own
+      # value when it isn't one of them (any more)
+      def record_options(path, value)
+        @record_options ||= {}
+        options = @record_options[path] ||= (@records && path.present?) ? @records.call(path).to_a.map { |label, id| [label.to_s, id.to_s] } : []
+        (value.blank? || options.any? { |_label, id| id == value }) ? options : options + [["<#{value}>", value]]
       end
 
       # A variable's label ("User › Name") and kind

@@ -6,7 +6,7 @@ module EntDec
     class RuleComponent < ViewComponent::Base
       attr_reader :conditions, :rule, :index
 
-      delegate :variables_url, :operator_options, to: :conditions
+      delegate :variables_url, :records_url, :operator_options, to: :conditions
 
       def initialize(conditions:, rule:, index:)
         @conditions = conditions
@@ -25,6 +25,10 @@ module EntDec
 
       def kind
         conditions.describe(rule.variable).last
+      end
+
+      def record_options
+        conditions.record_options(rule.variable, rule.value)
       end
 
       def boolean_options

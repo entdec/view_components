@@ -89,6 +89,29 @@ class ConditionsTest < ComponentTest
     assert_select "template input[name='template[conditions][rules][NEW_RULE][variable]']"
   end
 
+  test "with a records URL, an object is or isn't one of its records" do
+    describe = ->(path) { {"location" => ["Location", "object"]}[path] }
+    records = ->(path) { (path == "location") ? [["Rotterdam", 12], ["Venlo", 13]] : [] }
+    render_inline EntDec::Conditions::Component.new(name: "c", variables_url: "/variables", describe: describe, records_url: "/records", records: records,
+      rules: [{"variable" => "location", "operator" => "is", "value" => "13"}, {"variable" => "location", "operator" => "isnt", "value" => "99"}])
+
+    assert_select ".entdec-conditions[data-entdec--conditions-records-url-value='/records']"
+    assert_select "option[value='is'][data-kinds='boolean number string object']"
+    assert_select "option[value='matches'][data-kinds='string']"
+    assert_select "[data-role='record'] select[name='c[rules][0][value]'][data-entdec--conditions-target='records'] option[selected][value='13']", text: "Venlo"
+    # A record that isn't one of them (any more) stays chosen
+    assert_select "[data-role='record'] select[name='c[rules][1][value]'] option[selected][value='99']", text: "<99>"
+    assert_select "template [data-role='record'] select[name='c[rules][NEW_RULE][value]']"
+  end
+
+  test "without a records URL, an object is only empty or not" do
+    render_inline EntDec::Conditions::Component.new(name: "c", rules: [{"variable" => "location", "operator" => "is_empty"}])
+
+    assert_select "option[value='is'][data-kinds='boolean number string']"
+    assert_select "[data-role='record']", count: 0
+    assert_select ".entdec-conditions[data-entdec--conditions-records-url-value]", count: 0
+  end
+
   test "typed variables without a variables URL, and all for an unknown match" do
     render_inline EntDec::Conditions::Component.new(name: "c", match: "some", rules: [{"variable" => "order.total"}])
 
