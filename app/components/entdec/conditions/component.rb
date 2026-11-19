@@ -85,12 +85,14 @@ module EntDec
         OPERATORS_BY_KIND.merge("object" => RECORD_OPERATORS + OPERATORS_BY_KIND["object"])
       end
 
-      # An object variable's records, [[label, id]], with the rule's own
-      # value when it isn't one of them (any more)
+      # An object variable's records, [[label, id]], after a blank one, so
+      # none is chosen until someone does, with the rule's own value when it
+      # isn't one of them (any more)
       def record_options(path, value)
         @record_options ||= {}
-        options = @record_options[path] ||= (@records && path.present?) ? @records.call(path).to_a.map { |label, id| [label.to_s, id.to_s] } : []
-        (value.blank? || options.any? { |_label, id| id == value }) ? options : options + [["<#{value}>", value]]
+        options = @record_options[path] ||= [[I18n.t("entdec.conditions.choose_record"), ""]] +
+          ((@records && path.present?) ? @records.call(path).to_a.map { |label, id| [label.to_s, id.to_s] } : [])
+        (value.blank? || options.any? { |_label, id| id == value.to_s }) ? options : options + [["<#{value}>", value.to_s]]
       end
 
       # A variable's label ("User › Name") and kind

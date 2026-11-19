@@ -25,6 +25,7 @@ en:
         isnt_empty: isn't empty
       value: Value
       value_to: Up to
+      choose_record: Choose…
       and: and
       "true": "true"
       "false": "false"

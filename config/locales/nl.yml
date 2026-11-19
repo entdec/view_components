@@ -25,6 +25,7 @@ nl:
         isnt_empty: is niet leeg
       value: Waarde
       value_to: Tot en met
+      choose_record: Kies…
       and: en
       "true": waar
       "false": onwaar

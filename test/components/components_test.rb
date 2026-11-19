@@ -99,6 +99,8 @@ class ConditionsTest < ComponentTest
     assert_select "option[value='is'][data-kinds='boolean number string object']"
     assert_select "option[value='matches'][data-kinds='string']"
     assert_select "[data-role='record'] select[name='c[rules][0][value]'][data-entdec--conditions-target='records'] option[selected][value='13']", text: "Venlo"
+    # None chosen yet: the blank one, not the first record
+    assert_select "[data-role='record'] select[name='c[rules][NEW_RULE][value]'] option:first-child[value='']", text: "Choose…"
     # A record that isn't one of them (any more) stays chosen
     assert_select "[data-role='record'] select[name='c[rules][1][value]'] option[selected][value='99']", text: "<99>"
     assert_select "template [data-role='record'] select[name='c[rules][NEW_RULE][value]']"

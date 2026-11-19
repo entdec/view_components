@@ -31,7 +31,8 @@ export default class extends Controller {
     if (rule.dataset.kind === "object") this.loadRecords(rule)
   }
 
-  // The chosen object's records, for its value
+  // The chosen object's records, for its value: the one chosen stays, if
+  // it's one of them, else none (the blank option) is
   async loadRecords(rule) {
     const select = rule.querySelector("[data-entdec--conditions-target='records']")
     if (!this.recordsUrlValue || !select) return
@@ -43,7 +44,10 @@ export default class extends Controller {
     if (!response.ok) return
 
     const { records } = await response.json()
-    select.replaceChildren(...records.map(({ label, value }) => new Option(label, value)))
+    const current = select.value
+    const blank = select.querySelector("option[value='']")
+    select.replaceChildren(...(blank ? [blank] : []), ...records.map(({ label, value }) => new Option(label, value)))
+    select.value = records.some(({ value }) => value === current) ? current : ""
     select.dispatchEvent(new Event("change", { bubbles: true }))
   }
 
