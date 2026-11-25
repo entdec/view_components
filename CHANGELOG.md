@@ -1,9 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 - Conditions: with `records_url`, an object is or isn't one of its records,
-  chosen from a select.
+  chosen from a select, starting from a blank one (Choose…) rather than the
+  first record.
 
 ## 0.1.0
 
